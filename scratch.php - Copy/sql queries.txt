@@ -1,0 +1,107 @@
+CREATE DATABASE signup;
+use signup;
+CREATE TABLE users (
+    r_number VARCHAR(255) PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL
+
+);
+
+select * from users;
+ALTER TABLE users DROP COLUMN email , DROP COLUMN r_number;
+
+select * from users;
+
+ALTER TABLE users ADD COLUMN r_number VARCHAR(255) PRIMARY KEY; 
+
+INSERT INTO users (first_name, last_name, r_number) VALUES
+    ('John', 'Doe', '12349878'),
+    ('Alice', 'Smith', '98765432'),
+    ('Michael', 'Johnson', '45678901'),
+    ('Emily', 'Brown', '34561278'),
+    ('David', 'Lee', '87659921'),
+    ('Sarah', 'Wilson', '20956789'),
+    ('James', 'Davis', '76541210'),
+    ('Jennifer', 'Miller', '58781234'),
+    ('Robert', 'Taylor', '43298987'),
+    ('Linda', 'Anderson', '67807123'),
+    ('William', 'Thomas', '32108765'),
+    ('Karen', 'White', '78909534'),
+    ('Richard', 'Harris', '21087654'),
+    ('Jessica', 'Wilson', '89005345'),
+    ('Charles', 'Hall', '10876543'),
+    ('Megan', 'Johnson', '90123456'),
+    ('Daniel', 'Martin', '08760032'),
+    ('Laura', 'Moore', '01256567'),
+    ('Matthew', 'Young', '87654321'),
+    ('Susan', 'Walker', '12975678'),
+    ('Christopher', 'Clark', '65432109'),
+    ('Patricia', 'Thomas', '23459889'),
+    ('Joseph', 'Evans', '54321098'),
+    ('Nancy', 'Hernandez', '34567890'),
+    ('Andrew', 'Baker', '43210457'),
+    ('Elizabeth', 'Roberts', '76546210'),
+    ('Thomas', 'Davis', '67890123'),
+    ('Kimberly', 'Lewis', '21098765'),
+    ('Steven', 'Allen', '78901234'),
+    ('Margaret', 'Young', '10967654'),
+    ('Kevin', 'Johnson', '09012345'),
+    ('Donna', 'Hall', '09876543'),
+    ('Edward', 'Garcia', '01234567'),
+    ('Ruth', 'Moore', '98787432'),
+    ('Brian', 'Perez', '76540110'),
+    ('Deborah', 'Lopez', '23460089'),
+    ('Ronald', 'Harris', '10987654'),
+    ('Lisa', 'Thompson', '54321098'),
+    ('Anthony', 'Martinez', '93265432'),
+    ('Dorothy', 'Wilson', '10655678'),
+    ('Paul', 'Brown', '44310987'),
+    ('Karen', 'Jackson', '87054321'),
+    ('Mark', 'White', '34561278'),
+    ('Betty', 'Gonzalez', '56781234'),
+    ('Scott', 'Hill', '89012345'),
+    ('Sandra', 'Carter', '23043289')
+    ON DUPLICATE KEY UPDATE
+    first_name = CONCAT(first_name, '_duplicate'),
+    last_name = CONCAT(last_name, '_duplicate'),
+    r_number = CONCAT(r_number, '_duplicate');
+
+
+    CREATE TABLE checkins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    r_number VARCHAR(8) NOT NULL,
+    purpose VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    check_in_date_time DATETIME NOT NULL
+);
+SHOW TABLES;
+
+
+
+-- Create a new table to store R-numbers
+CREATE TABLE rnumbers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    r_number VARCHAR(8) NOT NULL
+);
+select * from rnumbers;
+
+ALTER TABLE checkins
+ADD checkout_time TIME NOT NULL;
+select * from checkins;
+
+ALTER TABLE checkins
+MODIFY checkout_time TIME NOT NULL;
+
+select * from users;
+
+ALTER TABLE checkins MODIFY checkout_time TIMESTAMP NULL DEFAULT NULL;
+ALTER TABLE checkins MODIFY checkout_time TIMESTAMP NULL DEFAULT NULL;
+
+ALTER TABLE checkins MODIFY checkout_time TIME NOT NULL;
+select * from checkins;
+
+
+ALTER TABLE checkins MODIFY purpose VARCHAR(255) NOT NULL;
+
+
