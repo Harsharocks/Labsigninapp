@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            flex-direction: column;
+            background-image: url('pic.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px; /* Increased font size */
+        }
+
+        .content-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .professor-login-button {
+            display: block;
+            text-align: center;
+            background-color: #fff;
+            color: #007bff;
+            top: 20px;
+            left: 20px;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Add your other styles here */
+
+        /* Style for the container */
+        .container {
+         
+            /* Set the width of the container as desired */
+            text-align: center;
+        }
+        #name {
+           
+             /* Change cursor to hand symbol on hover */
+            width: 60%; /* Set the width to 100% to make it expand to the container width */
+            height: 25px; /* Set the height to make it taller */
+            font-size: 16px;
+            border: 5px solid #333; /* Add a 2px solid border with color #333 */
+            padding: 8px;  /* Adjust the font size as needed */
+         /* Change cursor to hand symbol on hover */
+        }
+        #suggestion-box p {
+            cursor: pointer;
+        }
+            /* Style for the suggested names */
+            .suggestion-item {
+            padding: 10px;
+            cursor: pointer; /* Change cursor to hand symbol on hover */
+        }
+        
+        .label {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#name").keyup(function() {
+                var partialName = $(this).val();
+                if (partialName != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost/cmll-project/projectinprog%20-%20Copy/professorsearch.php",
+                        data: { partialName: partialName },
+                        success: function(data) {
+                            $(".suggestion-list").html(data);
+                            $("#suggestion-box").show(); // Show the suggestion box
+                        },
+                        error: function(xhr, status, error) {
+        console.error("AJAX Error: " + error);
+    }
+                    });
+                } else {
+                    $(".suggestion-list").html(""); // Clear the suggestion list
+                    $("#suggestion-box").hide(); // Hide the suggestion box if input is empty
+                }
+            });
+        });
+
+        // Function to populate the input field and display the selected user
+        function selectUser(name) {
+            $("#name").val(name);
+            $("#suggestion-box").hide(); // Hide the suggestion box
+            // Display the selected user under the search box
+            $("#selected-user").html("Selected User: " + name);
+            window.location.href = "professorlogin.php?name=" + encodeURIComponent(name);
+        }
+    </script>
+</head>
+<body>
+    <div class="professor-login-button" style="position: absolute; top: 10px; left: 10px;">
+        <a href="log.html" style="text-decoration: none; color: black; font-size: 30px; font-weight: bold; padding: 15px 30px">Student Login</a>
+    </div>
+    <div class="content-box">
+        <h1>CMLL</h1>
+        <h1>Welcome , Please Check-in/Check-out</h1>
+        <h2>Professor Login</h2>
+        <form>
+            <div class="container">
+                <label class="label" for="name" >Enter your name: </label><br>
+                <input type="text" id="name" name="name" autocomplete="off">
+                <div id="suggestion-box" style="display: none;">
+                    <ul class="suggestion-list"></ul>
+                </div>
+            </div>
+        </form>
+        <div id="selected-user"></div>
+    </div>
+</body>
+</html>

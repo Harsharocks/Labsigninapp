@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Submitted Successfully</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            flex-direction: column;
+            background-image: url('pic.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Make sure the container takes up the full viewport height */
+            margin: 0;           
+        }
+
+        .message-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h1>Thank you, feedback submitted successfully!</h1>
+    </div>
+    <script>
+        // Automatically redirect to log.html after 3 seconds
+        setTimeout(function () {
+            window.location.href = 'log.html';
+        }, 3000); // 3000 milliseconds = 3 seconds
+    </script>
+</body>
+</html>
