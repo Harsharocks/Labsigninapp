@@ -1,0 +1,15 @@
+[11-Oct-2023 20:02:27 Europe/Berlin] Received professor name: Professor 2
+[11-Oct-2023 20:02:27 Europe/Berlin] SQL Query: SELECT * FROM professor_checkins WHERE professor_name = 'Professor 2'
+[11-Oct-2023 20:02:27 Europe/Berlin] Professor found in the database.
+[11-Oct-2023 20:02:27 Europe/Berlin] Checkin SQL Query: SELECT * FROM professor_checkins WHERE professor_name = 'Professor 2' AND checkout_time = '00:00:00'
+[11-Oct-2023 20:03:01 Europe/Berlin] Received professor name: Professor 1
+[11-Oct-2023 20:03:01 Europe/Berlin] SQL Query: SELECT * FROM professor_checkins WHERE professor_name = 'Professor 1'
+[11-Oct-2023 20:03:01 Europe/Berlin] Professor found in the database.
+[11-Oct-2023 20:03:01 Europe/Berlin] Checkin SQL Query: SELECT * FROM professor_checkins WHERE professor_name = 'Professor 1' AND checkout_time = '00:00:00'
+[12-Oct-2023 17:19:39 Europe/Berlin] Received professor name: Professor 1
+[12-Oct-2023 17:19:39 Europe/Berlin] SQL Query: SELECT * FROM professor_checkins WHERE professor_name = 'Professor 1'
+[12-Oct-2023 17:19:39 Europe/Berlin] Professor found in the database.
+[12-Oct-2023 17:19:39 Europe/Berlin] Checkin SQL Query: SELECT * FROM professor_checkins WHERE professor_name = 'Professor 1' AND checkout_time = '00:00:00'
+[12-Oct-2023 18:24:14 Europe/Berlin] Received professor name: Professor 1
+[12-Oct-2023 18:24:14 Europe/Berlin] SQL Query: SELECT * FROM professors WHERE name = 'Professor 1'
+[12-Oct-2023 18:24:14 Europe/Berlin] Professor not found in the database.

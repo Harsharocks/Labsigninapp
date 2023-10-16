@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-In Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1 {
+            color: #333;
+        }
+
+        #container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        select, input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        select {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #verificationStatus {
+        display: none;
+        color: green;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+        /* Added CSS for the success message */
+        #successMessage {
+            display: block;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to CMLL lab. Please Check-In</h1>
+
+    <div id="container">
+        <form id="checkInForm" action="process_checkin.php" method="post" onsubmit="return checkIn()">
+            <label for="rNumber">Enter your R-number:</label>
+            <input type="text" id="rNumber" name="rNumber" placeholder="R-number">
+
+            <div id="alreadyMemberMessage" style="display: none; color: green; font-weight: bold; margin-top: 10px;">
+                You are already a member, please check in.
+            </div>
+
+            <label for="purpose">Select the purpose of your visit:</label>
+            <select id="purpose" name="purpose" onchange="showRNumberInput()">
+                <option value="none">Select Purpose</option>
+                <option value="meeting">Meeting</option>
+                <option value="appointment">Appointment</option>
+                <option value="event">Event</option>
+            </select>
+            
+   
+                <button id="submitButton" type="submit">Check-In</button>
+            </div>
+        </form>
+
+        <!-- Success message container -->
+        <div id="successMessage"></div>
+    </div>
+    
+    <script>
+        function showRNumberInput() {
+            var purposeSelect = document.getElementById("purpose");
+            var rNumberInput = document.getElementById("rNumber");
+
+
+            if (purposeSelect.value !== "none") {
+                rNumberInput.style.display = "block";
+            } else {
+                rNumberInput.style.display = "none";
+            }
+        }
+        window.onload = function () {
+    var rNumberInput = document.getElementById("rNumber");
+    var urlParams = new URLSearchParams(window.location.search);
+    var rNumber = urlParams.get("rNumber");
+
+    if (rNumber) {
+        rNumberInput.value = rNumber;
+    }
+};
+var urlParams = new URLSearchParams(window.location.search);
+        var rNumber = urlParams.get("rNumber");
+
+        if (rNumber) {
+            // Display the message
+            var alreadyMemberMessage = document.getElementById("alreadyMemberMessage");
+            alreadyMemberMessage.style.display = "block";
+        }
+
+
+        // Function to submit the form and display the success message
+        function checkIn() {
+            var purposeSelect = document.getElementById("purpose");
+            var rNumberInput = document.getElementById("rNumber");
+            var successMessage = document.getElementById("successMessage");
+
+            if (purposeSelect.value === "none" || rNumberInput.value === "") {
+                alert("Please select a purpose and enter your R-number.");
+                return false; // Prevent form submission
+            }
+        }
+            document.getElementById("submitButton").addEventListener("click", function(e) {
+                e.preventDefault(); 
+            var rNumberInput = document.getElementById("rNumber");
+            var successMessage = document.getElementById("successMessage");
+            var purposeDropdown = document.getElementById("purpose");
+
+ 
+            var rNumber = rNumberInput.value;
+            var purpose = purposeDropdown.style.display === "block" ? document.getElementById("purpose").value : "";
+
+            // Create a new FormData object to send form data to the server
+            var formData = new FormData();
+            formData.append("rNumber", rNumber);
+            formData.append("purpose", purpose);
+
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            
+            // Configure the request
+            xhr.open("POST", "process_checkin.php", true);
+
+            // Define the onload function to handle the response
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Successful response from the server
+                    var response = xhr.responseText;
+                    console.log("Response received: " +response); // Log the response for debugging
+
+                    if (response.includes("Check-in successful")) {
+    // Display success message
+    successMessage.textContent = response;
+    successMessage.style.color = 'green';
+    successMessage.style.display = 'block';
+} else {
+    // Error response from the server
+    console.log("Error: " + xhr.status);
+}
+                setTimeout(function() {
+                    window.location.href = "log.html";
+                }, 5000); // 2000 milliseconds = 2 seconds
+                }
+            }
+        
+
+            // Send the request with form data
+            xhr.send(formData);
+         } );
+    
+
+
+</script>
+</body>
+</html>

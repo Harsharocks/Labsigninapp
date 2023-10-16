@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CMLL Lab Check-in/Check-out</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            flex-direction: column;
+            background-image: url('pic.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Make sure the container takes up the full viewport height */
+            margin: 0;           
+        }
+
+        h1 {
+            color: #333;
+            font-size: 30px;
+        }
+
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lab-input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .lab {
+            flex-shrink: 0;
+            font-size: 30px; /* Prevent label from growing */
+            margin-right: 10px;
+            font-weight: bold; /* Adjust the margin as needed */
+        }
+
+        .textbox {
+            padding: 10px;
+            width: 300px; /* Adjust the width as needed */
+            font-size: 16px;
+            border: 5px solid #333;
+            border-radius: 5px;
+            outline: none;
+            display: block;
+            margin: 5px auto; /* Center the input field horizontally */
+        }
+
+        .textbox:focus {
+            border-color: #007bff;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .content-box {
+            background-color: white;
+            padding: 80px;
+            border-radius: 10px;
+            box-shadow: 0 0 500px rgba(24, 85, 16, 0.445);
+            text-align: center;
+        }
+
+        .label {
+            font-size: 30px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Style for the date and time */
+        #dateTime {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #007bff, #00ffcc);
+            color: #fff;
+            padding: 20px 30px; /* Increased padding for larger text */
+            border-radius: 10px;
+            font-size: 24px; /* Increased font size */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #camera-preview {
+            position: absolute;
+            top: 90px;
+            right: 10px;
+            width: 70%;
+            max-width: 330px;
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+        <!-- Camera preview video element -->
+        <video id="camera-preview" autoplay playsinline></video>
+
+
+    <!-- Display the current date and time -->
+    <div id="dateTime"></div>
+    
+    <div class="content-box">
+        <h1>CMLL</h1>
+    <h1>Welcome , Please Check-in/Check-out</h1>
+    <div class="container">
+        <form method="post" action="log.php" id="checkinForm">
+            <label class="label" for="rNumber">Enter R-number:</label><br>
+           
+            <div class="center-container">
+                <div class="lab-input-container">
+                    <label class="lab" for="rNumber">R-</label><br>
+                    <input type="text" id="rNumber" name="rNumber" class="textbox" pattern="[0-9]{8}" maxlength="8" placeholder="Swipe or Type R-number " oninput="stripNonNumeric()" autocomplete="off">
+                </div>
+            </div>
+        </form>
+        <div id="result"></div>
+    </div>
+    </div>
+    <script>
+        // Function to update the current date and time
+        function updateDateTime() {
+            const dateTimeElement = document.getElementById('dateTime');
+            const now = new Date();
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            const formattedDateTime = now.toLocaleDateString('en-US', options);
+            dateTimeElement.textContent = formattedDateTime;
+        }
+
+        // Update the date and time initially and every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // JavaScript for automatically submitting the form
+        const rNumberInput = document.getElementById('rNumber');
+        const checkinForm = document.getElementById('checkinForm');
+        function stripNonNumeric() {
+            var rNumberInput = document.getElementById("rNumber");
+            var inputValue = rNumberInput.value;
+            // Extract the first 8 digits
+            var numericValue = inputValue.match(/\d{1,8}/); 
+            if (numericValue) {
+                rNumberInput.value = numericValue[0];
+            } else {
+                rNumberInput.value = ""; // Clear the input if no valid digits found
+            }
+        }
+
+        rNumberInput.addEventListener('input', function () {
+            // Check if the input value has reached 8 characters
+            if (rNumberInput.value.length === 8) {
+                // Automatically submit the form
+                checkinForm.submit();
+            }
+        });
+
+
+
+                // Function to access the user's camera and display the video stream
+                async function startCamera() {
+            try {
+                // Get user media (camera) with constraints
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+                // Get the video element and set the stream as its source
+                const videoElement = document.getElementById('camera-preview');
+                videoElement.srcObject = stream;
+            } catch (error) {
+                console.error('Error accessing the camera:', error);
+            }
+        }
+
+        // Call the startCamera function to initiate camera access
+        startCamera();
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CMLL Lab Check-in/Check-out</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .label {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .textbox {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            outline: none;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .textbox:focus {
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to CMLL Lab Check-in/Check-out</h1>
+    <div class="container">
+        <form  method="post" action="log.php" id="checkinForm">
+            <label class="label" for="rNumber">Enter R-number:</label><br>
+            <input type="text" id="rNumber" name="rNumber" class="textbox" pattern="[0-9]{8}" maxlength="8" placeholder="Swipe/Enter R-number" oninput="stripNonNumeric()">
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        // JavaScript for automatically submitting the form
+        const rNumberInput = document.getElementById('rNumber');
+        const checkinForm = document.getElementById('checkinForm');
+        function stripNonNumeric() {
+            var rNumberInput = document.getElementById("rNumber");
+            var inputValue = rNumberInput.value;
+            // Extract the first 8 digits
+            var numericValue = inputValue.match(/\d{1,8}/); 
+            if (numericValue) {
+                rNumberInput.value = numericValue[0];
+            } else {
+                rNumberInput.value = ""; // Clear the input if no valid digits found
+            }
+        }
+
+        rNumberInput.addEventListener('input', function () {
+            // Check if the input value has reached 8 characters
+            if (rNumberInput.value.length === 8) {
+                // Automatically submit the form
+                checkinForm.submit();
+            }
+        });
+    </script>
+</body>
+</html>
